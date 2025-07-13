@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sistema profissional de gestão para consultório de nutrição - Priscila Dalbem Nutricionista. Gerencie pacientes, agendamentos e finanças de forma eficiente." />
+    <meta name="keywords" content="nutrição, consultório, agendamento, pacientes, nutricionista, gestão, sistema, saúde, alimentação, dieta" />
+    <meta name="author" content="Priscila Dalbem" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Portuguese" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agenda-nutricional.com/" />
+    <meta property="og:title" content="Agenda Nutricional - Sistema de Gestão para Nutricionistas" />
+    <meta property="og:description" content="Sistema completo para gestão de consultório de nutrição. Controle pacientes, agendamentos, finanças e muito mais." />
+    <meta property="og:image" content="https://agenda-nutricional.com/og-image.png" />
+    <meta property="og:site_name" content="Agenda Nutricional" />
+    <meta property="og:locale" content="pt_BR" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://agenda-nutricional.com/" />
+    <meta property="twitter:title" content="Agenda Nutricional - Sistema de Gestão para Nutricionistas" />
+    <meta property="twitter:description" content="Sistema completo para gestão de consultório de nutrição. Controle pacientes, agendamentos, finanças e muito mais." />
+    <meta property="twitter:image" content="https://agenda-nutricional.com/og-image.png" />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Agenda Nutricional" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Agenda Nutricional",
+      "description": "Sistema de gestão para consultório de nutrição",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Priscila Dalbem"
+      }
+    }
+    </script>
+    
+    <title>Agenda Nutricional - Sistema de Gestão para Nutricionistas | Priscila Dalbem</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+  </body>
+</html>
