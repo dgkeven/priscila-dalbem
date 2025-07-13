@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { TrendingUp, TrendingDown, DollarSign, Calendar, Plus, Filter, Edit, Trash2 } from 'lucide-react';
-import { mockFinancialRecords } from '../../data/mockData';
+import { TrendingUp, TrendingDown, DollarSign, Plus, Filter, Edit, Trash2 } from 'lucide-react';
 import { FinancialRecord } from '../../types';
 import { loadFromStorage, saveToStorage, STORAGE_KEYS } from '../../utils/storage';
 import FinancialRecordForm from './FinancialRecordForm';

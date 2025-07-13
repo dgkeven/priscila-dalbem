@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, User, Phone, MapPin, Edit, Trash2, Plus } from 'lucide-react';
+import { Calendar, Clock, User, Edit, Trash2, Plus } from 'lucide-react';
 import { Appointment } from '../../types';
 import { saveToStorage, STORAGE_KEYS } from '../../utils/storage';
 

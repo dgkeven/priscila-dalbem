@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Calendar, DollarSign, Clock, TrendingUp, TrendingDown } from 'lucide-react';
+import { Users, Calendar, DollarSign, Clock } from 'lucide-react';
 import { loadFromStorage, STORAGE_KEYS } from '../../utils/storage';
 import { DashboardStats } from '../../types';
 import { serviceTypes } from '../../data/mockData';
