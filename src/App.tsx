@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Menu } from 'lucide-react'; // ícone de hambúrguer
 import Login from './components/Auth/Login';
 import Sidebar from './components/Layout/Sidebar';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -19,29 +20,42 @@ import {
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false); // novo estado
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const [showPatientForm, setShowPatientForm] = useState(false);
-  const [editingAppointment, setEditingAppointment] = useState<Appointment | undefined>();
+  const [editingAppointment, setEditingAppointment] = useState<
+    Appointment | undefined
+  >();
   const [editingPatient, setEditingPatient] = useState<Patient | undefined>();
 
   // Carregar dados salvos do localStorage
-  const [patients, setPatients] = useState<Patient[]>(() => loadFromStorage(STORAGE_KEYS.PATIENTS, []));
-  const [appointments, setAppointments] = useState<Appointment[]>(() => loadFromStorage(STORAGE_KEYS.APPOINTMENTS, []));
-  
+  const [patients, setPatients] = useState<Patient[]>(() =>
+    loadFromStorage(STORAGE_KEYS.PATIENTS, [])
+  );
+  const [appointments, setAppointments] = useState<Appointment[]>(() =>
+    loadFromStorage(STORAGE_KEYS.APPOINTMENTS, [])
+  );
+
   // Carregar configurações de notificação
-  const notificationSettings: NotificationSettings = loadFromStorage(STORAGE_KEYS.NOTIFICATIONS, {
-    emailReminders: true,
-    smsReminders: true,
-    newAppointments: true,
-    cancelations: true,
-    paymentReminders: true
-  });
+  const notificationSettings: NotificationSettings = loadFromStorage(
+    STORAGE_KEYS.NOTIFICATIONS,
+    {
+      emailReminders: true,
+      smsReminders: true,
+      newAppointments: true,
+      cancelations: true,
+      paymentReminders: true,
+    }
+  );
 
   // Inicializar sistema de notificações
   React.useEffect(() => {
-    const schedulerInterval = startNotificationScheduler(appointments, notificationSettings);
-    
+    const schedulerInterval = startNotificationScheduler(
+      appointments,
+      notificationSettings
+    );
+
     return () => {
       if (schedulerInterval) {
         clearInterval(schedulerInterval);
@@ -57,7 +71,7 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setActiveTab('dashboard');
+    setActiveTab("dashboard");
     setShowAppointmentForm(false);
     setShowPatientForm(false);
     setEditingAppointment(undefined);
@@ -76,23 +90,25 @@ function App() {
 
   const handleSaveAppointment = (appointment: Appointment) => {
     const isNewAppointment = !editingAppointment;
-    const wasScheduled = editingAppointment?.status === 'scheduled';
-    const isCancelled = appointment.status === 'cancelled';
-    
-    const updatedAppointments = editingAppointment 
-      ? appointments.map(app => app.id === appointment.id ? appointment : app)
+    const wasScheduled = editingAppointment?.status === "scheduled";
+    const isCancelled = appointment.status === "cancelled";
+
+    const updatedAppointments = editingAppointment
+      ? appointments.map((app) =>
+          app.id === appointment.id ? appointment : app
+        )
       : [...appointments, appointment];
-    
+
     setAppointments(updatedAppointments);
     saveToStorage(STORAGE_KEYS.APPOINTMENTS, updatedAppointments);
-    
+
     // Enviar notificações
     if (isNewAppointment) {
       notifyNewAppointment(appointment, notificationSettings);
     } else if (wasScheduled && isCancelled) {
       notifyCancelation(appointment, notificationSettings);
     }
-    
+
     setShowAppointmentForm(false);
     setEditingAppointment(undefined);
   };
@@ -108,22 +124,22 @@ function App() {
   };
 
   const handleSavePatient = (patient: Patient) => {
-    const updatedPatients = editingPatient 
-      ? patients.map(p => p.id === patient.id ? patient : p)
+    const updatedPatients = editingPatient
+      ? patients.map((p) => (p.id === patient.id ? patient : p))
       : [...patients, patient];
-    
+
     setPatients(updatedPatients);
     saveToStorage(STORAGE_KEYS.PATIENTS, updatedPatients);
-    
+
     setShowPatientForm(false);
     setEditingPatient(undefined);
   };
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'dashboard':
+      case "dashboard":
         return <Dashboard />;
-      case 'appointments':
+      case "appointments":
         return (
           <AppointmentList
             appointments={appointments}
@@ -132,7 +148,7 @@ function App() {
             onAddAppointment={handleAddAppointment}
           />
         );
-      case 'patients':
+      case "patients":
         return (
           <PatientList
             patients={patients}
@@ -141,9 +157,9 @@ function App() {
             onAddPatient={handleAddPatient}
           />
         );
-      case 'financial':
+      case "financial":
         return <FinancialDashboard />;
-      case 'settings':
+      case "settings":
         return <Settings />;
       default:
         return <Dashboard />;
@@ -154,40 +170,54 @@ function App() {
     return <Login onLogin={handleLogin} />;
   }
 
-  return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        onLogout={handleLogout}
-      />
-      <main className="flex-1 overflow-auto">
-        {renderContent()}
-      </main>
+ return (
+   <div className="flex h-screen bg-gray-100 relative">
+     {/* Botão hambúrguer (mobile) */}
+     <button
+       onClick={() => setSidebarOpen(true)}
+       className="md:hidden absolute top-4 left-4 z-50 p-2 bg-emerald-600 text-white rounded shadow-lg"
+     >
+       <Menu className="w-6 h-6" />
+     </button>
 
-      {showAppointmentForm && (
-        <AppointmentForm
-          appointment={editingAppointment}
-          onSave={handleSaveAppointment}
-          onCancel={() => {
-            setShowAppointmentForm(false);
-            setEditingAppointment(undefined);
-          }}
-        />
-      )}
+     {/* Sidebar */}
+     <Sidebar
+       activeTab={activeTab}
+       setActiveTab={(tab) => {
+         setActiveTab(tab);
+         setSidebarOpen(false); // fecha o menu ao clicar
+       }}
+       onLogout={handleLogout}
+       isOpen={sidebarOpen}
+       onClose={() => setSidebarOpen(false)}
+     />
 
-      {showPatientForm && (
-        <PatientForm
-          patient={editingPatient}
-          onSave={handleSavePatient}
-          onCancel={() => {
-            setShowPatientForm(false);
-            setEditingPatient(undefined);
-          }}
-        />
-      )}
-    </div>
-  );
+     {/* Conteúdo principal */}
+     <main className="flex-1 overflow-auto">{renderContent()}</main>
+
+     {showAppointmentForm && (
+       <AppointmentForm
+         appointment={editingAppointment}
+         onSave={handleSaveAppointment}
+         onCancel={() => {
+           setShowAppointmentForm(false);
+           setEditingAppointment(undefined);
+         }}
+       />
+     )}
+
+     {showPatientForm && (
+       <PatientForm
+         patient={editingPatient}
+         onSave={handleSavePatient}
+         onCancel={() => {
+           setShowPatientForm(false);
+           setEditingPatient(undefined);
+         }}
+       />
+     )}
+   </div>
+ );
 }
 
 export default App;
