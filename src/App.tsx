@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { Menu } from 'lucide-react'; // ícone de hambúrguer
-import Login from './components/Auth/Login';
-import Sidebar from './components/Layout/Sidebar';
-import Dashboard from './components/Dashboard/Dashboard';
-import AppointmentList from './components/Appointments/AppointmentList';
-import AppointmentForm from './components/Appointments/AppointmentForm';
-import PatientList from './components/Patients/PatientList';
-import PatientForm from './components/Patients/PatientForm';
-import FinancialDashboard from './components/Financial/FinancialDashboard';
-import Settings from './components/Settings/Settings';
-import { Appointment, Patient } from './types';
-import { saveToStorage, loadFromStorage, STORAGE_KEYS } from './utils/storage';
-import { 
-  notifyNewAppointment, 
-  notifyCancelation, 
+import React, { useState } from "react";
+import { Menu } from "lucide-react"; // ícone de hambúrguer
+import Login from "./components/Auth/Login";
+import Sidebar from "./components/Layout/Sidebar";
+import Dashboard from "./components/Dashboard/Dashboard";
+import AppointmentList from "./components/Appointments/AppointmentList";
+import AppointmentForm from "./components/Appointments/AppointmentForm";
+import PatientList from "./components/Patients/PatientList";
+import PatientForm from "./components/Patients/PatientForm";
+import FinancialDashboard from "./components/Financial/FinancialDashboard";
+import Settings from "./components/Settings/Settings";
+import { Appointment, Patient } from "./types";
+import { saveToStorage, loadFromStorage, STORAGE_KEYS } from "./utils/storage";
+import {
+  notifyNewAppointment,
+  notifyCancelation,
   startNotificationScheduler,
-  NotificationSettings 
-} from './utils/notifications';
+  NotificationSettings,
+} from "./utils/notifications";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [sidebarOpen, setSidebarOpen] = useState(false); // novo estado
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const [showPatientForm, setShowPatientForm] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState<
@@ -170,54 +170,55 @@ function App() {
     return <Login onLogin={handleLogin} />;
   }
 
- return (
-   <div className="flex h-screen bg-gray-100 relative">
-     {/* Botão hambúrguer (mobile) */}
-     <button
-       onClick={() => setSidebarOpen(true)}
-       className="md:hidden absolute top-4 left-4 z-50 p-2 bg-emerald-600 text-white rounded shadow-lg"
-     >
-       <Menu className="w-6 h-6" />
-     </button>
+  return (
+    <div className="flex h-screen bg-gray-100 relative">
+      {/* Botão hamburguer (mobile) */}
+      <button
+        onClick={() => setSidebarOpen(true)}
+        className="md:hidden absolute top-4 left-4 z-50 p-2 bg-emerald-600 text-white rounded shadow-lg"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
 
-     {/* Sidebar */}
-     <Sidebar
-       activeTab={activeTab}
-       setActiveTab={(tab) => {
-         setActiveTab(tab);
-         setSidebarOpen(false); // fecha o menu ao clicar
-       }}
-       onLogout={handleLogout}
-       isOpen={sidebarOpen}
-       onClose={() => setSidebarOpen(false)}
-     />
+      {/* Sidebar */}
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={(tab) => {
+          setActiveTab(tab);
+          setSidebarOpen(false); // fecha o menu ao clicar no mobile
+        }}
+        onLogout={handleLogout}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
-     {/* Conteúdo principal */}
-     <main className="flex-1 overflow-auto">{renderContent()}</main>
+      {/* Conteúdo principal */}
+      <main className="flex-1 overflow-auto">{renderContent()}</main>
 
-     {showAppointmentForm && (
-       <AppointmentForm
-         appointment={editingAppointment}
-         onSave={handleSaveAppointment}
-         onCancel={() => {
-           setShowAppointmentForm(false);
-           setEditingAppointment(undefined);
-         }}
-       />
-     )}
+      {/* Formulários */}
+      {showAppointmentForm && (
+        <AppointmentForm
+          appointment={editingAppointment}
+          onSave={handleSaveAppointment}
+          onCancel={() => {
+            setShowAppointmentForm(false);
+            setEditingAppointment(undefined);
+          }}
+        />
+      )}
 
-     {showPatientForm && (
-       <PatientForm
-         patient={editingPatient}
-         onSave={handleSavePatient}
-         onCancel={() => {
-           setShowPatientForm(false);
-           setEditingPatient(undefined);
-         }}
-       />
-     )}
-   </div>
- );
+      {showPatientForm && (
+        <PatientForm
+          patient={editingPatient}
+          onSave={handleSavePatient}
+          onCancel={() => {
+            setShowPatientForm(false);
+            setEditingPatient(undefined);
+          }}
+        />
+      )}
+    </div>
+  );
 }
 
 export default App;
