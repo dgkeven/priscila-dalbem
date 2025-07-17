@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Bell, Check, X, Clock, Calendar, DollarSign } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Bell, Check, X, Clock, Calendar, DollarSign, UserPlus } from 'lucide-react';
 import { Notification } from '../../utils/notifications';
-import { loadFromStorage, saveToStorage } from '../../utils/storage';
+import { loadFromStorage, saveToStorage, STORAGE_KEYS } from '../../utils/storage';
 
 const NotificationCenter: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>(() => 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Plus, Edit, Trash2, User, Calendar } from 'lucide-react';
+import { Search, Plus, Edit, Trash2, User, Phone, Mail, Calendar } from 'lucide-react';
 import { Patient } from '../../types';
 import { saveToStorage, STORAGE_KEYS } from '../../utils/storage';
 
@@ -30,6 +30,9 @@ const PatientList: React.FC<PatientListProps> = ({
     }
   };
 
+  const calculateAge = (birthDate: string) => {
+    return 0; // Removido cálculo de idade
+  };
 
   const calculateBMI = (weight: number, height: number) => {
     const heightInMeters = height / 100;
@@ -74,6 +77,7 @@ const PatientList: React.FC<PatientListProps> = ({
 
       <div className="grid gap-6">
         {filteredPatients.map((patient) => {
+          const age = calculateAge(patient.birthDate);
           const bmi = parseFloat(calculateBMI(patient.weight, patient.height));
           const bmiInfo = getBMICategory(bmi);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Calendar, Clock, User, FileText } from 'lucide-react';
+import { X, Calendar, Clock, User, FileText, DollarSign } from 'lucide-react';
 import { loadFromStorage, STORAGE_KEYS } from '../../utils/storage';
 import { Appointment } from '../../types';
 
