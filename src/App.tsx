@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './components/Auth/Login';
 import Sidebar from './components/Layout/Sidebar';
+import MobileSidebar from './components/Layout/MobileSidebar';
 import Dashboard from './components/Dashboard/Dashboard';
 import AppointmentList from './components/Appointments/AppointmentList';
 import AppointmentForm from './components/Appointments/AppointmentForm';
@@ -47,7 +48,7 @@ function App() {
         clearInterval(schedulerInterval);
       }
     };
-  }, [appointments]);
+  }, [appointments, notificationSettings]);
 
   const handleLogin = (success: boolean) => {
     if (success) {
@@ -155,13 +156,24 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar 
+    <div className="flex h-screen bg-gray-100 relative">
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <Sidebar 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          onLogout={handleLogout}
+        />
+      </div>
+      
+      {/* Mobile Sidebar */}
+      <MobileSidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab}
         onLogout={handleLogout}
       />
-      <main className="flex-1 overflow-auto">
+      
+      <main className="flex-1 overflow-auto pt-0 lg:pt-0 pb-20 lg:pb-0">
         {renderContent()}
       </main>
 

@@ -129,15 +129,15 @@ const FinancialDashboard: React.FC = () => {
   const { totalIncome, totalExpenses, netProfit } = calculateTotals();
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-4 lg:p-6 bg-gray-50 min-h-screen">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 space-y-4 lg:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Controle Financeiro</h1>
-          <p className="text-gray-600">Gerencie suas receitas e despesas</p>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Controle Financeiro</h1>
+          <p className="text-sm lg:text-base text-gray-600">Gerencie suas receitas e despesas</p>
         </div>
         <button 
           onClick={handleAddRecord}
-          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2 hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg"
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg flex items-center justify-center space-x-2 hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base"
         >
           <Plus className="w-5 h-5" />
           <span>Novo Registro</span>
@@ -145,58 +145,58 @@ const FinancialDashboard: React.FC = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
-              <TrendingUp className="w-6 h-6 text-white" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+          <div className="flex items-center justify-between mb-3 lg:mb-4">
+            <div className="p-2 lg:p-3 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+              <TrendingUp className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
-          <p className="text-gray-600 text-sm font-medium">Receitas</p>
-          <p className="text-2xl font-bold text-green-600">
+          <p className="text-gray-600 text-xs lg:text-sm font-medium">Receitas</p>
+          <p className="text-lg lg:text-2xl font-bold text-green-600">
             {totalIncome > 0 ? `R$ ${totalIncome.toLocaleString('pt-BR')}` : 'R$ 0,00'}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-lg">
-              <TrendingDown className="w-6 h-6 text-white" />
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+          <div className="flex items-center justify-between mb-3 lg:mb-4">
+            <div className="p-2 lg:p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-lg">
+              <TrendingDown className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
-          <p className="text-gray-600 text-sm font-medium">Despesas</p>
-          <p className="text-2xl font-bold text-red-600">
+          <p className="text-gray-600 text-xs lg:text-sm font-medium">Despesas</p>
+          <p className="text-lg lg:text-2xl font-bold text-red-600">
             {totalExpenses > 0 ? `R$ ${totalExpenses.toLocaleString('pt-BR')}` : 'R$ 0,00'}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className={`p-3 rounded-lg ${netProfit >= 0 ? 'bg-gradient-to-r from-emerald-500 to-emerald-600' : 'bg-gradient-to-r from-red-500 to-red-600'}`}>
-              <DollarSign className="w-6 h-6 text-white" />
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+          <div className="flex items-center justify-between mb-3 lg:mb-4">
+            <div className={`p-2 lg:p-3 rounded-lg ${netProfit >= 0 ? 'bg-gradient-to-r from-emerald-500 to-emerald-600' : 'bg-gradient-to-r from-red-500 to-red-600'}`}>
+              <DollarSign className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
           </div>
-          <p className="text-gray-600 text-sm font-medium">Lucro Líquido</p>
-          <p className={`text-2xl font-bold ${netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+          <p className="text-gray-600 text-xs lg:text-sm font-medium">Lucro Líquido</p>
+          <p className={`text-lg lg:text-2xl font-bold ${netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {netProfit !== 0 ? `R$ ${netProfit.toLocaleString('pt-BR')}` : 'R$ 0,00'}
           </p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-        <div className="flex flex-wrap gap-4 items-center">
+      <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6 mb-4 lg:mb-6">
+        <div className="flex flex-col lg:flex-row lg:flex-wrap gap-3 lg:gap-4 lg:items-center">
           <div className="flex items-center space-x-2">
-            <Filter className="w-5 h-5 text-gray-500" />
-            <span className="font-medium text-gray-700">Filtros:</span>
+            <Filter className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" />
+            <span className="font-medium text-gray-700 text-sm lg:text-base">Filtros:</span>
           </div>
           
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             {['all', 'income', 'expense'].map((type) => (
               <button
                 key={type}
                 onClick={() => setFilter(type as any)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-3 lg:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm lg:text-base ${
                   filter === type
                     ? 'bg-emerald-500 text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -207,12 +207,12 @@ const FinancialDashboard: React.FC = () => {
             ))}
           </div>
 
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             {['week', 'month', 'year'].map((period) => (
               <button
                 key={period}
                 onClick={() => setDateRange(period as any)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-3 lg:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm lg:text-base ${
                   dateRange === period
                     ? 'bg-emerald-500 text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -226,29 +226,29 @@ const FinancialDashboard: React.FC = () => {
       </div>
 
       {/* Records List */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-6">Movimentações Recentes</h3>
+      <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6 mb-4 lg:mb-6">
+        <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-4 lg:mb-6">Movimentações Recentes</h3>
         {filteredRecords.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-2 lg:space-y-3">
             {filteredRecords.map((record) => {
               const Icon = getRecordIcon(record.type);
               return (
-                <div key={record.id} className={`flex items-center justify-between p-4 rounded-lg ${getRecordBgColor(record.type)} hover:shadow-md transition-all duration-200`}>
+                <div key={record.id} className={`flex items-center justify-between p-3 lg:p-4 rounded-lg ${getRecordBgColor(record.type)} hover:shadow-md transition-all duration-200`}>
                   <div className="flex items-center space-x-3">
                     <Icon className={`w-5 h-5 ${getRecordColor(record.type)}`} />
                     <div>
-                      <p className="font-medium text-gray-800">{record.description}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="font-medium text-gray-800 text-sm lg:text-base">{record.description}</p>
+                      <p className="text-xs lg:text-sm text-gray-600">
                         {new Date(record.date).toLocaleDateString('pt-BR')} • {record.category}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center space-x-3">
-                      <p className={`text-lg font-bold ${getRecordColor(record.type)}`}>
+                    <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-3">
+                      <p className={`text-sm lg:text-lg font-bold ${getRecordColor(record.type)}`}>
                       {record.type === 'income' ? '+' : '-'}R$ {record.amount.toLocaleString('pt-BR')}
                       </p>
-                      <div className="flex space-x-1">
+                      <div className="flex space-x-1 justify-end lg:justify-start">
                         <button
                           onClick={() => handleEditRecord(record)}
                           className="p-1 text-blue-600 hover:bg-blue-100 rounded transition-colors"
@@ -270,8 +270,8 @@ const FinancialDashboard: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-8">
-            <DollarSign className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-500">
+            <DollarSign className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400 mx-auto mb-3" />
+            <p className="text-sm lg:text-base text-gray-500">
               {filter === 'all' ? 'Nenhuma movimentação registrada' : 
                filter === 'income' ? 'Nenhuma receita encontrada' : 'Nenhuma despesa encontrada'}
               {dateRange !== 'year' && ` no período selecionado`}
@@ -281,9 +281,9 @@ const FinancialDashboard: React.FC = () => {
       </div>
 
       {/* Categories Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Receitas por Categoria</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+          <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-4">Receitas por Categoria</h3>
           {(() => {
             const incomeRecords = filteredRecords.filter(r => r.type === 'income');
             const categories = incomeRecords.reduce((acc, record) => {
@@ -317,11 +317,11 @@ const FinancialDashboard: React.FC = () => {
             const categoryEntries = Object.entries(categories);
             
             return categoryEntries.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-2 lg:space-y-3">
                 {categoryEntries.map(([category, amount]) => (
                   <div key={category} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                    <span className="font-medium text-gray-800">{category}</span>
-                    <span className="font-bold text-green-600">
+                    <span className="font-medium text-gray-800 text-sm lg:text-base">{category}</span>
+                    <span className="font-bold text-green-600 text-sm lg:text-base">
                       R$ {amount.toLocaleString('pt-BR')}
                     </span>
                   </div>
@@ -329,15 +329,15 @@ const FinancialDashboard: React.FC = () => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                <TrendingUp className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400 mx-auto mb-3" />
                 <p className="text-gray-500">Nenhuma receita no período</p>
               </div>
             );
           })()}
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Despesas por Categoria</h3>
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+          <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-4">Despesas por Categoria</h3>
           {(() => {
             const expenseRecords = filteredRecords.filter(r => r.type === 'expense');
             const categories = expenseRecords.reduce((acc, record) => {
@@ -348,11 +348,11 @@ const FinancialDashboard: React.FC = () => {
             const categoryEntries = Object.entries(categories);
             
             return categoryEntries.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-2 lg:space-y-3">
                 {categoryEntries.map(([category, amount]) => (
                   <div key={category} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
-                    <span className="font-medium text-gray-800">{category}</span>
-                    <span className="font-bold text-red-600">
+                    <span className="font-medium text-gray-800 text-sm lg:text-base">{category}</span>
+                    <span className="font-bold text-red-600 text-sm lg:text-base">
                       R$ {amount.toLocaleString('pt-BR')}
                     </span>
                   </div>
@@ -360,7 +360,7 @@ const FinancialDashboard: React.FC = () => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <TrendingDown className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                <TrendingDown className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400 mx-auto mb-3" />
                 <p className="text-gray-500">Nenhuma despesa no período</p>
               </div>
             );

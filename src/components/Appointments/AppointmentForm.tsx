@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Calendar, Clock, User, FileText, DollarSign } from 'lucide-react';
 import { loadFromStorage, STORAGE_KEYS } from '../../utils/storage';
+import { defaultServiceTypes } from '../../data/mockData';
 import { Appointment } from '../../types';
 
 interface AppointmentFormProps {
@@ -10,7 +11,7 @@ interface AppointmentFormProps {
 }
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, onCancel }) => {
-  const serviceTypes = loadFromStorage(STORAGE_KEYS.SERVICE_TYPES, []);
+  const serviceTypes = loadFromStorage(STORAGE_KEYS.SERVICE_TYPES, defaultServiceTypes);
   const patients = loadFromStorage(STORAGE_KEYS.PATIENTS, []);
   
   const [formData, setFormData] = useState({

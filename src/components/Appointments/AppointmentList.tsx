@@ -51,27 +51,27 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-4 lg:p-6 bg-gray-50 min-h-screen">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 space-y-4 lg:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Agendamentos</h1>
-          <p className="text-gray-600">Gerencie todas as suas consultas</p>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Agendamentos</h1>
+          <p className="text-sm lg:text-base text-gray-600">Gerencie todas as suas consultas</p>
         </div>
         <button
           onClick={onAddAppointment}
-          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2 hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg"
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg flex items-center justify-center space-x-2 hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base"
         >
           <Plus className="w-5 h-5" />
           <span>Nova Consulta</span>
         </button>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="mb-6 flex flex-wrap gap-2 lg:gap-2">
         {['all', 'scheduled', 'completed', 'cancelled'].map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status as any)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-3 lg:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm lg:text-base ${
               filter === status
                 ? 'bg-emerald-500 text-white shadow-lg'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -84,45 +84,45 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
 
       <div className="grid gap-4">
         {filteredAppointments.map((appointment) => (
-          <div key={appointment.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+          <div key={appointment.id} className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6 hover:shadow-xl transition-all duration-300">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center space-x-4 mb-4">
+                <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-4 mb-4">
                   <div 
                     className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: appointment.serviceType.color }}
                   />
-                  <h3 className="text-xl font-bold text-gray-800">{appointment.patientName}</h3>
-                  <span className={`px-3 py-1 text-sm rounded-full font-medium ${getStatusColor(appointment.status)}`}>
+                  <h3 className="text-lg lg:text-xl font-bold text-gray-800">{appointment.patientName}</h3>
+                  <span className={`px-2 lg:px-3 py-1 text-xs lg:text-sm rounded-full font-medium ${getStatusColor(appointment.status)}`}>
                     {getStatusText(appointment.status)}
                   </span>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  <div className="flex items-center space-x-2 text-gray-600">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 mb-4">
+                  <div className="flex items-center space-x-2 text-gray-600 text-sm lg:text-base">
                     <Calendar className="w-4 h-4" />
                     <span>{new Date(appointment.date).toLocaleDateString('pt-BR')}</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-gray-600">
+                  <div className="flex items-center space-x-2 text-gray-600 text-sm lg:text-base">
                     <Clock className="w-4 h-4" />
                     <span>{appointment.time}</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-gray-600">
+                  <div className="flex items-center space-x-2 text-gray-600 text-sm lg:text-base">
                     <User className="w-4 h-4" />
                     <span>{appointment.serviceType.name}</span>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-gray-700 font-medium mb-2">Observações:</p>
-                  <p className="text-gray-600">{appointment.notes || 'Nenhuma observação'}</p>
+                <div className="bg-gray-50 rounded-lg p-3 lg:p-4 mb-4">
+                  <p className="text-xs lg:text-sm text-gray-700 font-medium mb-2">Observações:</p>
+                  <p className="text-xs lg:text-sm text-gray-600">{appointment.notes || 'Nenhuma observação'}</p>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-emerald-600">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-3 lg:space-y-0">
+                  <div className="text-xl lg:text-2xl font-bold text-emerald-600">
                     R$ {appointment.price.toLocaleString('pt-BR')}
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-2 justify-end lg:justify-start">
                     <button
                       onClick={() => onEditAppointment(appointment)}
                       className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
@@ -145,9 +145,9 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
 
       {filteredAppointments.length === 0 && (
         <div className="text-center py-12">
-          <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-medium text-gray-600 mb-2">Nenhum agendamento encontrado</h3>
-          <p className="text-gray-500">Adicione uma nova consulta para começar</p>
+          <Calendar className="w-12 h-12 lg:w-16 lg:h-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg lg:text-xl font-medium text-gray-600 mb-2">Nenhum agendamento encontrado</h3>
+          <p className="text-sm lg:text-base text-gray-500">Adicione uma nova consulta para começar</p>
         </div>
       )}
     </div>

@@ -14,6 +14,14 @@ export const saveToStorage = (key: string, data: any) => {
     console.log(`Salvando no localStorage - Key: ${key}`, data);
     localStorage.setItem(key, JSON.stringify(data));
     console.log(`Salvo com sucesso - Key: ${key}`);
+    
+    // Verificar se realmente foi salvo
+    const verification = localStorage.getItem(key);
+    if (!verification) {
+      console.error(`Falha na verificação de salvamento - Key: ${key}`);
+      return false;
+    }
+    
     return true;
   } catch (error) {
     console.error('Erro ao salvar no localStorage:', error);
@@ -26,6 +34,13 @@ export const loadFromStorage = (key: string, defaultValue: any = null) => {
     const stored = localStorage.getItem(key);
     const result = stored ? JSON.parse(stored) : defaultValue;
     console.log(`Carregando do localStorage - Key: ${key}`, result);
+    
+    // Se não há dados salvos e temos um valor padrão, salvar o padrão
+    if (!stored && defaultValue !== null) {
+      console.log(`Inicializando dados padrão para - Key: ${key}`);
+      saveToStorage(key, defaultValue);
+    }
+    
     return result;
   } catch (error) {
     console.error('Erro ao carregar do localStorage:', error);
