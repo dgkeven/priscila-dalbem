@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { X, Calendar, Clock, User, FileText, DollarSign } from 'lucide-react';
-import { loadFromStorage, STORAGE_KEYS } from '../../utils/storage';
-import { defaultServiceTypes } from '../../data/mockData';
-import { Appointment } from '../../types';
+import React, { useState } from "react";
+import { X, Calendar, Clock, User, FileText } from "lucide-react";
+import { loadFromStorage, STORAGE_KEYS } from "../../utils/storage";
+import { defaultServiceTypes } from "../../data/mockData";
+import { Appointment } from "../../types";
 
 interface AppointmentFormProps {
   appointment?: Appointment;
@@ -10,25 +10,43 @@ interface AppointmentFormProps {
   onCancel: () => void;
 }
 
-const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, onCancel }) => {
-  const serviceTypes = loadFromStorage(STORAGE_KEYS.SERVICE_TYPES, defaultServiceTypes);
+type AppointmentStatus = "scheduled" | "completed" | "cancelled" | "no-show";
+
+const AppointmentForm: React.FC<AppointmentFormProps> = ({
+  appointment,
+  onSave,
+  onCancel,
+}) => {
+  const serviceTypes = loadFromStorage(
+    STORAGE_KEYS.SERVICE_TYPES,
+    defaultServiceTypes
+  );
   const patients = loadFromStorage(STORAGE_KEYS.PATIENTS, []);
-  
-  const [formData, setFormData] = useState({
-    patientId: appointment?.patientId || '',
-    serviceTypeId: appointment?.serviceType.id || '',
-    date: appointment?.date || '',
-    time: appointment?.time || '',
-    notes: appointment?.notes || '',
-    status: appointment?.status || 'scheduled'
+
+  const [formData, setFormData] = useState<{
+    patientId: string;
+    serviceTypeId: string;
+    date: string;
+    time: string;
+    notes: string;
+    status: AppointmentStatus;
+  }>({
+    patientId: appointment?.patientId || "",
+    serviceTypeId: appointment?.serviceType.id || "",
+    date: appointment?.date || "",
+    time: appointment?.time || "",
+    notes: appointment?.notes || "",
+    status: (appointment?.status as AppointmentStatus) || "scheduled",
   });
 
-  const selectedServiceType = serviceTypes.find(st => st.id === formData.serviceTypeId);
-  const selectedPatient = patients.find(p => p.id === formData.patientId);
+  const selectedServiceType = serviceTypes.find(
+    (st) => st.id === formData.serviceTypeId
+  );
+  const selectedPatient = patients.find((p) => p.id === formData.patientId);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!selectedServiceType || !selectedPatient) return;
 
     const newAppointment: Appointment = {
@@ -38,10 +56,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
       serviceType: selectedServiceType,
       date: formData.date,
       time: formData.time,
-      status: formData.status as any,
+      status: formData.status,
       notes: formData.notes,
       price: selectedServiceType.price,
-      createdAt: appointment?.createdAt || new Date().toISOString()
+      createdAt: appointment?.createdAt || new Date().toISOString(),
     };
 
     onSave(newAppointment);
@@ -53,7 +71,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-800">
-              {appointment ? 'Editar Consulta' : 'Nova Consulta'}
+              {appointment ? "Editar Consulta" : "Nova Consulta"}
             </h2>
             <button
               onClick={onCancel}
@@ -73,12 +91,14 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               </label>
               <select
                 value={formData.patientId}
-                onChange={(e) => setFormData({ ...formData, patientId: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, patientId: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               >
                 <option value="">Selecione um paciente</option>
-                {patients.map(patient => (
+                {patients.map((patient) => (
                   <option key={patient.id} value={patient.id}>
                     {patient.name}
                   </option>
@@ -93,12 +113,14 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               </label>
               <select
                 value={formData.serviceTypeId}
-                onChange={(e) => setFormData({ ...formData, serviceTypeId: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, serviceTypeId: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               >
                 <option value="">Selecione um tipo</option>
-                {serviceTypes.map(service => (
+                {serviceTypes.map((service) => (
                   <option key={service.id} value={service.id}>
                     {service.name} - R$ {service.price}
                   </option>
@@ -114,7 +136,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               <input
                 type="date"
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -128,7 +152,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               <input
                 type="time"
                 value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, time: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -139,8 +165,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-emerald-800">{selectedServiceType.name}</p>
-                  <p className="text-sm text-emerald-600">{selectedServiceType.description}</p>
+                  <p className="font-medium text-emerald-800">
+                    {selectedServiceType.name}
+                  </p>
+                  <p className="text-sm text-emerald-600">
+                    {selectedServiceType.description}
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-emerald-600">
@@ -158,7 +188,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
             </label>
             <textarea
               value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, notes: e.target.value })
+              }
               rows={3}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Adicione observações sobre a consulta..."
@@ -172,7 +204,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               </label>
               <select
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="scheduled">Agendado</option>
@@ -195,7 +229,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ appointment, onSave, 
               type="submit"
               className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg"
             >
-              {appointment ? 'Salvar Alterações' : 'Criar Consulta'}
+              {appointment ? "Salvar Alterações" : "Criar Consulta"}
             </button>
           </div>
         </form>

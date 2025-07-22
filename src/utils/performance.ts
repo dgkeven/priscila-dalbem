@@ -1,3 +1,5 @@
+import React from "react";
+
 // Performance monitoring utilities
 export const measurePerformance = (name: string, fn: () => void) => {
   const start = performance.now();
@@ -7,11 +9,11 @@ export const measurePerformance = (name: string, fn: () => void) => {
 };
 
 // Debounce utility for search inputs
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -19,18 +21,28 @@ export const debounce = <T extends (...args: any[]) => any>(
 };
 
 // Lazy loading utility
-export const lazyLoad = (importFunc: () => Promise<any>) => {
+export const lazyLoad = <T extends React.ComponentType<unknown>>(
+  importFunc: () => Promise<{ default: T }>
+) => {
   return React.lazy(importFunc);
 };
 
+// Interface para performance.memory
+interface PerformanceMemory {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
 // Memory usage monitoring
 export const logMemoryUsage = () => {
-  if ('memory' in performance) {
-    const memory = (performance as any).memory;
-    console.log('Memory usage:', {
-      used: Math.round(memory.usedJSHeapSize / 1048576) + ' MB',
-      total: Math.round(memory.totalJSHeapSize / 1048576) + ' MB',
-      limit: Math.round(memory.jsHeapSizeLimit / 1048576) + ' MB'
+  if ("memory" in performance) {
+    const memory = (performance as Performance & { memory: PerformanceMemory })
+      .memory;
+    console.log("Memory usage:", {
+      used: Math.round(memory.usedJSHeapSize / 1048576) + " MB",
+      total: Math.round(memory.totalJSHeapSize / 1048576) + " MB",
+      limit: Math.round(memory.jsHeapSizeLimit / 1048576) + " MB",
     });
   }
 };

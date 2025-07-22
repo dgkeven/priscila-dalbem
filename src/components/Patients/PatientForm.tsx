@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { X, User, Mail, Phone, Calendar, Ruler, Weight, MapPin, FileText, Target } from 'lucide-react';
-import { Patient } from '../../types';
+import React, { useState } from "react";
+import { X, User, Phone, Ruler, Weight, FileText, Target } from "lucide-react";
+import { Patient } from "../../types";
 
 interface PatientFormProps {
   patient?: Patient;
@@ -8,25 +8,29 @@ interface PatientFormProps {
   onCancel: () => void;
 }
 
-const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) => {
+const PatientForm: React.FC<PatientFormProps> = ({
+  patient,
+  onSave,
+  onCancel,
+}) => {
   const [formData, setFormData] = useState({
-    name: patient?.name || '',
-    phone: patient?.phone || '',
-    gender: patient?.gender || 'female',
+    name: patient?.name || "",
+    phone: patient?.phone || "",
+    gender: patient?.gender || "female",
     weight: patient?.weight || 0,
     height: patient?.height || 0,
-    medicalHistory: patient?.medicalHistory || '',
-    goals: patient?.goals || ''
+    medicalHistory: patient?.medicalHistory || "",
+    goals: patient?.goals || "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newPatient: Patient = {
       id: patient?.id || Date.now().toString(),
       ...formData,
       createdAt: patient?.createdAt || new Date().toISOString(),
-      lastAppointment: patient?.lastAppointment
+      lastAppointment: patient?.lastAppointment,
     };
 
     onSave(newPatient);
@@ -38,7 +42,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-800">
-              {patient ? 'Editar Paciente' : 'Novo Paciente'}
+              {patient ? "Editar Paciente" : "Novo Paciente"}
             </h2>
             <button
               onClick={onCancel}
@@ -59,7 +63,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -73,7 +79,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
               <input
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -85,7 +93,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
               </label>
               <select
                 value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="female">Feminino</option>
@@ -103,7 +113,12 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
                 type="number"
                 step="0.1"
                 value={formData.weight}
-                onChange={(e) => setFormData({ ...formData, weight: parseFloat(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    weight: parseFloat(e.target.value),
+                  })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -117,7 +132,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
               <input
                 type="number"
                 value={formData.height}
-                onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, height: parseInt(e.target.value) })
+                }
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
@@ -131,7 +148,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
             </label>
             <textarea
               value={formData.goals}
-              onChange={(e) => setFormData({ ...formData, goals: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, goals: e.target.value })
+              }
               rows={3}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Descreva os objetivos do paciente..."
@@ -146,7 +165,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
             </label>
             <textarea
               value={formData.medicalHistory}
-              onChange={(e) => setFormData({ ...formData, medicalHistory: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, medicalHistory: e.target.value })
+              }
               rows={3}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Doenças, alergias, medicamentos em uso..."
@@ -165,7 +186,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSave, onCancel }) 
               type="submit"
               className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg"
             >
-              {patient ? 'Salvar Alterações' : 'Cadastrar Paciente'}
+              {patient ? "Salvar Alterações" : "Cadastrar Paciente"}
             </button>
           </div>
         </form>

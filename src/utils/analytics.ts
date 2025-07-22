@@ -36,10 +36,10 @@ export const trackPageView = (page: string) => {
 };
 
 // Track user interactions
-export const trackUserAction = (action: string, details?: any) => {
+export const trackUserAction = (action: string, details?: unknown) => {
   trackEvent({
     action,
-    category: 'User Interaction',
-    label: JSON.stringify(details)
+    category: "User Interaction",
+    label: JSON.stringify(details),
   });
 };
