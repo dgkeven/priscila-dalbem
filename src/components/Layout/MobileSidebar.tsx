@@ -26,53 +26,53 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
   return (
     <>
       {/* Mobile Header */}
-      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-4 flex items-center justify-between">
+      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-3 sm:p-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-emerald-600" />
+          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center">
+            <User className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
           </div>
           <div>
-            <h2 className="font-bold text-lg">Priscila Dalbem</h2>
-            <p className="text-emerald-100 text-sm">Nutricionista</p>
+            <h2 className="font-bold text-base sm:text-lg">Priscila Dalbem</h2>
+            <p className="text-emerald-100 text-xs sm:text-sm">Nutricionista</p>
           </div>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 hover:bg-emerald-500 rounded-lg transition-colors"
+          className="p-1.5 sm:p-2 hover:bg-emerald-500 rounded-lg transition-colors"
         >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50" onClick={() => setIsOpen(false)}>
-          <div className="bg-gradient-to-b from-emerald-600 to-emerald-700 text-white w-64 h-full" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-emerald-500">
+          <div className="bg-gradient-to-b from-emerald-600 to-emerald-700 text-white w-56 sm:w-64 h-full" onClick={(e) => e.stopPropagation()}>
+            <div className="p-4 sm:p-6 border-b border-emerald-500">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <User className="w-6 h-6 text-emerald-600" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center">
+                  <User className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-lg">Priscila Dalbem</h2>
-                  <p className="text-emerald-100 text-sm">Nutricionista</p>
+                  <h2 className="font-bold text-base sm:text-lg">Priscila Dalbem</h2>
+                  <p className="text-emerald-100 text-xs sm:text-sm">Nutricionista</p>
                 </div>
               </div>
             </div>
             
-            <nav className="py-6">
-              <ul className="space-y-2 px-4">
+            <nav className="py-4 sm:py-6">
+              <ul className="space-y-1 sm:space-y-2 px-3 sm:px-4">
                 {menuItems.map((item) => (
                   <li key={item.id}>
                     <button
                       onClick={() => handleMenuClick(item.id)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 text-sm sm:text-base ${
                         activeTab === item.id
                           ? 'bg-emerald-500 shadow-lg'
                           : 'hover:bg-emerald-500/50'
                       }`}
                     >
-                      <item.icon className="w-5 h-5" />
+                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                       <span className="font-medium">{item.label}</span>
                     </button>
                   </li>
@@ -80,15 +80,15 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
               </ul>
             </nav>
             
-            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-emerald-500">
+            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 border-t border-emerald-500">
               <button
                 onClick={() => {
                   onLogout();
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 text-emerald-100"
+                className="w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 text-emerald-100 text-sm sm:text-base"
               >
-                <LogOut className="w-5 h-5" />
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="font-medium">Sair</span>
               </button>
             </div>
@@ -97,20 +97,20 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
       )}
 
       {/* Bottom Navigation for Mobile */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 z-40">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 sm:px-2 py-1.5 sm:py-2 z-40 safe-area-inset-bottom">
         <div className="flex justify-around">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-lg transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-0.5 sm:space-y-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 ${
                 activeTab === item.id
                   ? 'text-emerald-600 bg-emerald-50'
                   : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
               }`}
             >
-              <item.icon className="w-5 h-5" />
-              <span className="text-xs font-medium">{item.label}</span>
+              <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-xs font-medium leading-tight">{item.label}</span>
             </button>
           ))}
         </div>

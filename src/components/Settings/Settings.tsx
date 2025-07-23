@@ -101,27 +101,18 @@ const Settings: React.FC = () => {
     }
   };
 
-  interface ServiceType {
-    id: string;
-    price: number;
-    name?: string;
-    description?: string;
-    color?: string;
-  }
-
-  const [serviceSettings, setServiceSettings] = useState(() => {
-    const storedServices = loadFromStorage(
-      STORAGE_KEYS.SERVICE_TYPES,
-      defaultServiceTypes
-    ) as ServiceType[];
-    return storedServices.reduce(
-      (acc: Record<string, { price: number }>, service: ServiceType) => {
-        acc[service.id] = { price: service.price };
-        return acc;
-      },
-      {}
-    );
-  });
+  const [serviceSettings, setServiceSettings] = useState(() =>
+    loadFromStorage(STORAGE_KEYS.SERVICE_TYPES, defaultServiceTypes).reduce(
+      (
+        acc: Record<string, { price: number }>,
+        service: { id: string; price: number }
+      ) => ({
+        ...acc,
+        [service.id]: { price: service.price },
+      }),
+      {} as Record<string, { price: number }>
+    )
+  );
 
   const handleSaveSettings = () => {
     // Salvar configurações no localStorage
@@ -166,41 +157,41 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="p-4 lg:p-6 bg-gray-50 min-h-screen">
+    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6">
       {showSaveMessage && (
-        <div className="fixed top-4 right-4 bg-green-500 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg shadow-lg flex items-center space-x-2 z-50 text-sm lg:text-base">
-          <Check className="w-5 h-5" />
+        <div className="fixed top-3 right-3 sm:top-4 sm:right-4 bg-green-500 text-white px-3 sm:px-4 lg:px-6 py-2 sm:py-2 lg:py-3 rounded-lg shadow-lg flex items-center space-x-2 z-50 text-xs sm:text-sm lg:text-base">
+          <Check className="w-4 h-4 sm:w-5 sm:h-5" />
           <span>Configurações salvas com sucesso!</span>
         </div>
       )}
 
       <div className="mb-8">
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
           Configurações
         </h1>
-        <p className="text-sm lg:text-base text-gray-600">
+        <p className="text-xs sm:text-sm lg:text-base text-gray-600">
           Personalize suas preferências e configurações do sistema
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
         {/* Notification Center */}
         <div className="lg:col-span-2">
           <NotificationCenter />
         </div>
 
         {/* Profile Settings */}
-        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-3 sm:p-4 lg:p-6">
           <div className="flex items-center space-x-3 mb-6">
-            <User className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-600" />
-            <h2 className="text-lg lg:text-xl font-bold text-gray-800">
+            <User className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-emerald-600" />
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
               Perfil Profissional
             </h2>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-xs lg:text-sm font-medium text-gray-700 mb-2">
                 Nome
               </label>
               <input
@@ -209,12 +200,12 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, name: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
               />
             </div>
 
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-xs lg:text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
               <input
@@ -223,12 +214,12 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, email: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
               />
             </div>
 
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-xs lg:text-sm font-medium text-gray-700 mb-2">
                 Telefone
               </label>
               <input
@@ -237,12 +228,12 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, phone: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
               />
             </div>
 
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-xs lg:text-sm font-medium text-gray-700 mb-2">
                 CRN
               </label>
               <input
@@ -251,17 +242,17 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, crn: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
               />
             </div>
           </div>
         </div>
 
         {/* Service Types */}
-        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-3 sm:p-4 lg:p-6">
           <div className="flex items-center space-x-3 mb-6">
-            <DollarSign className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-600" />
-            <h2 className="text-lg lg:text-xl font-bold text-gray-800">
+            <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-emerald-600" />
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
               Tipos de Atendimento
             </h2>
           </div>
@@ -270,23 +261,23 @@ const Settings: React.FC = () => {
             {defaultServiceTypes.map((service) => (
               <div
                 key={service.id}
-                className="border border-gray-200 rounded-lg p-3 lg:p-4"
+                className="border border-gray-200 rounded-lg p-2.5 sm:p-3 lg:p-4"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-gray-800 text-sm lg:text-base">
+                  <h3 className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                     {service.name}
                   </h3>
                   <div
-                    className="w-4 h-4 rounded-full"
+                    className="w-3 h-3 sm:w-4 sm:h-4 rounded-full flex-shrink-0"
                     style={{ backgroundColor: service.color }}
                   />
                 </div>
-                <p className="text-xs lg:text-sm text-gray-600 mb-3">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600 mb-3">
                   {service.description}
                 </p>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs lg:text-xs text-gray-500 mb-1">
+                    <label className="block text-xs sm:text-xs lg:text-xs text-gray-500 mb-1">
                       Preço (R$)
                     </label>
                     <input
@@ -300,7 +291,7 @@ const Settings: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="w-full border border-gray-300 rounded px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
@@ -310,10 +301,10 @@ const Settings: React.FC = () => {
         </div>
 
         {/* Working Hours */}
-        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-3 sm:p-4 lg:p-6">
           <div className="flex items-center space-x-3 mb-6">
-            <Clock className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-600" />
-            <h2 className="text-lg lg:text-xl font-bold text-gray-800">
+            <Clock className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-emerald-600" />
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
               Horários de Funcionamento
             </h2>
           </div>
@@ -325,11 +316,11 @@ const Settings: React.FC = () => {
                 className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-4"
               >
                 <div className="w-full lg:w-32">
-                  <span className="text-xs lg:text-sm font-medium text-gray-700">
+                  <span className="text-xs sm:text-xs lg:text-sm font-medium text-gray-700">
                     {dayNames[day as keyof typeof dayNames]}
                   </span>
                 </div>
-                <div className="flex items-center space-x-2 text-sm lg:text-base">
+                <div className="flex items-center space-x-2 text-xs sm:text-sm lg:text-base">
                   <input
                     type="checkbox"
                     checked={hours.enabled}
@@ -339,7 +330,7 @@ const Settings: React.FC = () => {
                         [day]: { ...hours, enabled: e.target.checked },
                       })
                     }
-                    className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                    className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
                   />
                   <input
                     type="time"
@@ -351,9 +342,11 @@ const Settings: React.FC = () => {
                         [day]: { ...hours, start: e.target.value },
                       })
                     }
-                    className="border border-gray-300 rounded px-2 py-1 text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="border border-gray-300 rounded px-1.5 sm:px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
                   />
-                  <span className="text-gray-500 text-xs lg:text-sm">às</span>
+                  <span className="text-gray-500 text-xs sm:text-xs lg:text-sm">
+                    às
+                  </span>
                   <input
                     type="time"
                     value={hours.end}
@@ -364,7 +357,7 @@ const Settings: React.FC = () => {
                         [day]: { ...hours, end: e.target.value },
                       })
                     }
-                    className="border border-gray-300 rounded px-2 py-1 text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="border border-gray-300 rounded px-1.5 sm:px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
                   />
                 </div>
               </div>
@@ -373,10 +366,10 @@ const Settings: React.FC = () => {
         </div>
 
         {/* Notifications */}
-        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-4 lg:p-6">
+        <div className="bg-white rounded-lg lg:rounded-xl shadow-lg p-3 sm:p-4 lg:p-6">
           <div className="flex items-center space-x-3 mb-6">
-            <Bell className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-600" />
-            <h2 className="text-lg lg:text-xl font-bold text-gray-800">
+            <Bell className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-emerald-600" />
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
               Notificações
             </h2>
           </div>
@@ -389,9 +382,9 @@ const Settings: React.FC = () => {
                 : "bg-yellow-50 border border-yellow-200"
             }`}
           >
-            <div className="flex items-center space-x-2 text-sm lg:text-base">
+            <div className="flex items-center space-x-2 text-xs sm:text-sm lg:text-base">
               <AlertCircle
-                className={`w-5 h-5 ${
+                className={`w-4 h-4 sm:w-5 sm:h-5 ${
                   notificationPermission === "granted"
                     ? "text-green-600"
                     : "text-yellow-600"
@@ -412,7 +405,7 @@ const Settings: React.FC = () => {
             {notificationPermission !== "granted" && (
               <button
                 onClick={handleRequestNotificationPermission}
-                className="mt-2 bg-yellow-600 text-white px-3 lg:px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors text-sm lg:text-base"
+                className="mt-2 bg-yellow-600 text-white px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-yellow-700 transition-colors text-xs sm:text-sm lg:text-base"
               >
                 Ativar Notificações
               </button>
@@ -422,15 +415,15 @@ const Settings: React.FC = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-800 text-sm lg:text-base">
+                <p className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                   Lembretes por Email
                 </p>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600">
                   Receber lembretes de consultas por email
                 </p>
                 <button
                   onClick={() => handleTestNotification("email")}
-                  className="text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
+                  className="text-xs sm:text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
                 >
                   Testar email
                 </button>
@@ -445,22 +438,22 @@ const Settings: React.FC = () => {
                       emailReminders: e.target.checked,
                     })
                   }
-                  className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                  className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-800 text-sm lg:text-base">
+                <p className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                   Lembretes por SMS
                 </p>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600">
                   Receber lembretes de consultas por SMS
                 </p>
                 <button
                   onClick={() => handleTestNotification("sms")}
-                  className="text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
+                  className="text-xs sm:text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
                 >
                   Testar SMS
                 </button>
@@ -475,22 +468,22 @@ const Settings: React.FC = () => {
                       smsReminders: e.target.checked,
                     })
                   }
-                  className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                  className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-800 text-sm lg:text-base">
+                <p className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                   Novos Agendamentos
                 </p>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600">
                   Notificar sobre novos agendamentos
                 </p>
                 <button
                   onClick={() => handleTestNotification("browser")}
-                  className="text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
+                  className="text-xs sm:text-xs lg:text-xs text-emerald-600 hover:text-emerald-700 mt-1"
                 >
                   Testar notificação
                 </button>
@@ -505,17 +498,17 @@ const Settings: React.FC = () => {
                       newAppointments: e.target.checked,
                     })
                   }
-                  className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                  className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-800 text-sm lg:text-base">
+                <p className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                   Cancelamentos
                 </p>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600">
                   Notificar sobre cancelamentos
                 </p>
               </div>
@@ -528,16 +521,16 @@ const Settings: React.FC = () => {
                     cancelations: e.target.checked,
                   })
                 }
-                className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
               />
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-gray-800 text-sm lg:text-base">
+                <p className="font-medium text-gray-800 text-xs sm:text-sm lg:text-base">
                   Lembretes de Pagamento
                 </p>
-                <p className="text-xs lg:text-sm text-gray-600">
+                <p className="text-xs sm:text-xs lg:text-sm text-gray-600">
                   Notificar sobre pagamentos pendentes
                 </p>
               </div>
@@ -550,7 +543,7 @@ const Settings: React.FC = () => {
                     paymentReminders: e.target.checked,
                   })
                 }
-                className="w-3 h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                className="w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-emerald-600 rounded focus:ring-emerald-500"
               />
             </div>
           </div>
@@ -560,7 +553,7 @@ const Settings: React.FC = () => {
       <div className="mt-6 flex justify-end">
         <button
           onClick={handleSaveSettings}
-          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base"
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-2 lg:py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base"
         >
           Salvar Configurações
         </button>
