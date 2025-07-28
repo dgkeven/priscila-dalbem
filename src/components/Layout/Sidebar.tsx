@@ -7,8 +7,8 @@ import {
   Settings,
   User,
   LogOut,
-  ChevronLeft,
-  ChevronRight,
+  Menu,
+  X,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -39,31 +39,32 @@ const Sidebar: React.FC<SidebarProps> = ({
       } bg-gradient-to-b from-emerald-600 to-emerald-700 text-white flex flex-col h-screen transition-all duration-300 ease-in-out`}
     >
       {/* Header */}
-      <div
-        className={`p-4 border-b border-emerald-500 flex items-center justify-between`}
-      >
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <User className="w-6 h-6 text-emerald-600" />
-          </div>
-          {!collapsed && (
+      <div className="flex items-center justify-between p-4 border-b border-emerald-500">
+        {/* Botão hambúrguer */}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="text-white hover:bg-emerald-500 p-1.5 rounded-md transition"
+        >
+          {collapsed ? <Menu size={20} /> : <X size={20} />}
+        </button>
+
+        {/* Perfil */}
+        {!collapsed && (
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+              <User className="w-6 h-6 text-emerald-600" />
+            </div>
             <div>
               <h2 className="font-bold text-lg leading-tight">
                 Priscila Dalbem
               </h2>
               <p className="text-emerald-100 text-sm">Nutricionista</p>
             </div>
-          )}
-        </div>
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="text-white ml-2 hover:bg-emerald-500 p-1 rounded-md"
-        >
-          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-        </button>
+          </div>
+        )}
       </div>
 
-      {/* Navigation */}
+      {/* Menu */}
       <nav className="flex-1 py-6">
         <ul className="space-y-2 px-2">
           {menuItems.map((item) => (
@@ -94,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           onClick={onLogout}
           className={`w-full flex items-center ${
             collapsed ? "justify-center" : "justify-start"
-          } space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 hover:transform hover:scale-105 text-emerald-100`}
+          } space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 text-emerald-100`}
         >
           <LogOut className="w-5 h-5" />
           {!collapsed && <span className="font-medium">Sair</span>}
