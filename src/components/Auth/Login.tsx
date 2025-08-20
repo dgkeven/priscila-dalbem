@@ -135,7 +135,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-gray-500 text-xs sm:text-sm">
-            © 2024 Agenda Nutricional - Todos os direitos reservados
+            © 2025 Agenda Nutricional - Todos os direitos reservados
           </p>
         </div>
       </div>
