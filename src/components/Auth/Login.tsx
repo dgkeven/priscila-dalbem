@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { User, Lock, Eye, EyeOff, Heart } from 'lucide-react';
+import React, { useState } from "react";
+import { User, Lock, Eye, EyeOff, Heart } from "lucide-react";
 
 interface LoginProps {
   onLogin: (success: boolean) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     // Simular delay de autenticação
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    if (email === 'prisciladalbem@gmail.com' && password === 'Nutrição') {
+    if (email === "prisciladalbem@gmail.com" && password === "Nutrição") {
       onLogin(true);
     } else {
-      setError('Email ou senha incorretos');
+      setError("Email ou senha incorretos");
       onLogin(false);
     }
 
@@ -38,21 +38,31 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full mb-4 shadow-lg">
             <Heart className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">Agenda Nutricional</h1>
-          <p className="text-xs sm:text-sm lg:text-base text-gray-600">Sistema de Gestão - Priscila Dalbem</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+            Agenda Nutricional
+          </h1>
+          <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+            Sistema de Gestão - Priscila Dalbem
+          </p>
         </div>
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 border border-gray-100">
           <div className="mb-6">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2">Bem-vinda de volta!</h2>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-600">Faça login para acessar seu consultório</p>
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2">
+              Bem-vinda de volta!
+            </h2>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+              Faça login para acessar seu consultório
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 sm:p-4">
-                <p className="text-red-600 text-xs sm:text-sm font-medium">{error}</p>
+                <p className="text-red-600 text-xs sm:text-sm font-medium">
+                  {error}
+                </p>
               </div>
             )}
 
@@ -84,7 +94,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   <Lock className="h-4 w-4 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-gray-400" />
                 </div>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-8 sm:pl-9 lg:pl-10 pr-9 sm:pr-10 lg:pr-12 py-2.5 sm:py-2 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-sm lg:text-base"
@@ -116,18 +126,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   <span>Entrando...</span>
                 </div>
               ) : (
-                'Entrar'
+                "Entrar"
               )}
             </button>
           </form>
-
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="bg-emerald-50 rounded-lg p-3 sm:p-4">
-              <p className="text-xs sm:text-xs lg:text-sm text-emerald-700 font-medium mb-2">Credenciais de acesso:</p>
-              <p className="text-xs sm:text-xs lg:text-sm text-emerald-600">Email: prisciladalbem@gmail.com</p>
-              <p className="text-xs sm:text-xs lg:text-sm text-emerald-600">Senha: Nutrição</p>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
