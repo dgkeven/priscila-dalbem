@@ -25,22 +25,22 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
 
   return (
     <>
-      {/* Mobile Header */}
-      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-3 sm:p-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center">
-            <User className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+      {/* Mobile Header - Compacto */}
+      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-3 py-2 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+            <User className="w-3.5 h-3.5 text-emerald-600" />
           </div>
           <div>
-            <h2 className="font-bold text-base sm:text-lg">Priscila Dalbem</h2>
-            <p className="text-emerald-100 text-xs sm:text-sm">Nutricionista</p>
+            <h2 className="font-bold text-sm">Priscila Dalbem</h2>
+            <p className="text-emerald-100 text-xs">Nutricionista</p>
           </div>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-1.5 sm:p-2 hover:bg-emerald-500 rounded-lg transition-colors"
+          className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
         >
-          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
@@ -96,20 +96,20 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
         </div>
       )}
 
-      {/* Bottom Navigation for Mobile */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 sm:px-2 py-1.5 sm:py-2 z-40 safe-area-inset-bottom">
+      {/* Bottom Navigation for Mobile - Compacta */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 py-1 z-40 safe-area-inset-bottom">
         <div className="flex justify-around">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center space-y-0.5 sm:space-y-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-0.5 px-1.5 py-1 rounded-lg transition-all duration-200 ${
                 activeTab === item.id
                   ? 'text-emerald-600 bg-emerald-50'
                   : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
               }`}
             >
-              <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <item.icon className="w-4 h-4" />
               <span className="text-xs font-medium leading-tight">{item.label}</span>
             </button>
           ))}
