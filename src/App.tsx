@@ -173,7 +173,7 @@ function App() {
         onLogout={handleLogout}
       />
       
-      <main className="flex-1 overflow-auto pt-0 lg:pt-0 pb-20 lg:pb-0">
+      <main className="flex-1 overflow-auto pt-0 lg:pt-0 pb-16 lg:pb-0">
         {renderContent()}
       </main>
 
