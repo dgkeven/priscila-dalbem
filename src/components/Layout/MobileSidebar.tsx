@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Users, DollarSign, BarChart3, Settings, User, LogOut, Menu, X } from 'lucide-react';
+import { Calendar, Users, DollarSign, BarChart3, Settings, User, LogOut, Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface MobileSidebarProps {
   activeTab: string;
@@ -9,6 +9,7 @@ interface MobileSidebarProps {
 
 const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const menuItems = [
     { id: 'dashboard', icon: BarChart3, label: 'Dashboard' },
@@ -23,26 +24,57 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
     setIsOpen(false);
   };
 
+  const handleMinimizeToggle = () => {
+    setIsMinimized(!isMinimized);
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
-      {/* Mobile Header - Compacto */}
-      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-3 py-2 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-            <User className="w-3.5 h-3.5 text-emerald-600" />
+      {/* Mobile Header - Condicionalmente visível */}
+      {!isMinimized && (
+        <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-3 py-2 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+              <User className="w-3.5 h-3.5 text-emerald-600" />
+            </div>
+            <div>
+              <h2 className="font-bold text-sm">Priscila Dalbem</h2>
+              <p className="text-emerald-100 text-xs">Nutricionista</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-bold text-sm">Priscila Dalbem</h2>
-            <p className="text-emerald-100 text-xs">Nutricionista</p>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={handleMinimizeToggle}
+              className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
+              title={isMinimized ? "Expandir" : "Minimizar"}
+            >
+              {isMinimized ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
-        >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
+      )}
+
+      {/* Botão de expansão quando minimizado */}
+      {isMinimized && (
+        <div className="lg:hidden fixed top-2 right-2 z-50">
+          <button
+            onClick={handleMinimizeToggle}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full shadow-lg transition-colors"
+            title="Expandir menu"
+          >
+            <ChevronUp className="w-5 h-5" />
+          </button>
+        </div>
+      )}
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
@@ -96,25 +128,27 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
         </div>
       )}
 
-      {/* Bottom Navigation for Mobile - Compacta */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 py-1 z-40 safe-area-inset-bottom">
-        <div className="flex justify-around">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center space-y-0.5 px-1.5 py-1 rounded-lg transition-all duration-200 ${
-                activeTab === item.id
-                  ? 'text-emerald-600 bg-emerald-50'
-                  : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
-              }`}
-            >
-              <item.icon className="w-4 h-4" />
-              <span className="text-xs font-medium leading-tight">{item.label}</span>
-            </button>
-          ))}
+      {/* Bottom Navigation for Mobile - Condicionalmente visível */}
+      {!isMinimized && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 py-1 z-40 safe-area-inset-bottom">
+          <div className="flex justify-around">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex flex-col items-center space-y-0.5 px-1.5 py-1 rounded-lg transition-all duration-200 ${
+                  activeTab === item.id
+                    ? 'text-emerald-600 bg-emerald-50'
+                    : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
+                }`}
+              >
+                <item.icon className="w-4 h-4" />
+                <span className="text-xs font-medium leading-tight">{item.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
