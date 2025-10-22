@@ -31,11 +31,18 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
     }
   };
 
+  const handleMenuToggle = () => {
+    setIsOpen(!isOpen);
+    if (isMinimized) {
+      setIsMinimized(false);
+    }
+  };
+
   return (
     <>
-      {/* Mobile Header - Condicionalmente visível */}
+      {/* Mobile Header - Visível apenas quando não minimizado */}
       {!isMinimized && (
-        <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-3 py-2 flex items-center justify-between">
+        <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-3 py-2 flex items-center justify-between sticky top-0 z-40">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
               <User className="w-3.5 h-3.5 text-emerald-600" />
@@ -49,12 +56,12 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
             <button
               onClick={handleMinimizeToggle}
               className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
-              title={isMinimized ? "Expandir" : "Minimizar"}
+              title="Minimizar"
             >
-              {isMinimized ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              <ChevronDown className="w-5 h-5" />
             </button>
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={handleMenuToggle}
               className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -63,12 +70,12 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
         </div>
       )}
 
-      {/* Botão de expansão quando minimizado */}
+      {/* Botão flutuante quando minimizado */}
       {isMinimized && (
         <div className="lg:hidden fixed top-2 right-2 z-50">
           <button
             onClick={handleMinimizeToggle}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full shadow-lg transition-colors"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
             title="Expandir menu"
           >
             <ChevronUp className="w-5 h-5" />
@@ -79,32 +86,32 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50" onClick={() => setIsOpen(false)}>
-          <div className="bg-gradient-to-b from-emerald-600 to-emerald-700 text-white w-56 sm:w-64 h-full" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-gradient-to-b from-emerald-600 to-emerald-700 text-white w-64 sm:w-72 h-full" onClick={(e) => e.stopPropagation()}>
             <div className="p-4 sm:p-6 border-b border-emerald-500">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center">
-                  <User className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <User className="w-6 h-6 text-emerald-600" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-base sm:text-lg">Priscila Dalbem</h2>
-                  <p className="text-emerald-100 text-xs sm:text-sm">Nutricionista</p>
+                  <h2 className="font-bold text-lg">Priscila Dalbem</h2>
+                  <p className="text-emerald-100 text-sm">Nutricionista</p>
                 </div>
               </div>
             </div>
             
-            <nav className="py-4 sm:py-6">
-              <ul className="space-y-1 sm:space-y-2 px-3 sm:px-4">
+            <nav className="py-6">
+              <ul className="space-y-2 px-4">
                 {menuItems.map((item) => (
                   <li key={item.id}>
                     <button
                       onClick={() => handleMenuClick(item.id)}
-                      className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 text-sm sm:text-base ${
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                         activeTab === item.id
                           ? 'bg-emerald-500 shadow-lg'
                           : 'hover:bg-emerald-500/50'
                       }`}
                     >
-                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <item.icon className="w-5 h-5" />
                       <span className="font-medium">{item.label}</span>
                     </button>
                   </li>
@@ -112,15 +119,15 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
               </ul>
             </nav>
             
-            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 border-t border-emerald-500">
+            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-emerald-500">
               <button
                 onClick={() => {
                   onLogout();
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 text-emerald-100 text-sm sm:text-base"
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-500/50 text-emerald-100"
               >
-                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                <LogOut className="w-5 h-5" />
                 <span className="font-medium">Sair</span>
               </button>
             </div>
@@ -128,7 +135,7 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
         </div>
       )}
 
-      {/* Bottom Navigation for Mobile - Condicionalmente visível */}
+      {/* Bottom Navigation for Mobile - Visível apenas quando não minimizado */}
       {!isMinimized && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-1 py-1 z-40 safe-area-inset-bottom">
           <div className="flex justify-around">

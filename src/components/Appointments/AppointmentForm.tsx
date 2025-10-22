@@ -66,24 +66,24 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-gray-200">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50 mobile-safe">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mobile-scroll">
+        <div className="p-4 sm:p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
               {appointment ? "Editar Consulta" : "Nova Consulta"}
             </h2>
             <button
               onClick={onCancel}
-              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg mobile-touch"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <User className="w-4 h-4 inline mr-2" />
@@ -94,7 +94,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, patientId: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
                 required
               >
                 <option value="">Selecione um paciente</option>
@@ -116,7 +116,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, serviceTypeId: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
                 required
               >
                 <option value="">Selecione um tipo</option>
@@ -139,7 +139,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, date: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
                 required
               />
             </div>
@@ -155,7 +155,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, time: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
                 required
               />
             </div>
@@ -217,17 +217,17 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             </div>
           )}
 
-          <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={onCancel}
-              className="px-6 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors mobile-touch"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg mobile-touch"
             >
               {appointment ? "Salvar Alterações" : "Criar Consulta"}
             </button>
