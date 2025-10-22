@@ -1,5 +1,6 @@
 // Utilitários para persistência local
 export const STORAGE_KEYS = {
+  AUTH: "nutritionist_auth",
   PROFILE: "nutritionist_profile",
   WORKING_HOURS: "nutritionist_working_hours",
   NOTIFICATIONS: "nutritionist_notifications",
