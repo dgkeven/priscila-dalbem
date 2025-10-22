@@ -245,13 +245,23 @@ export const startNotificationScheduler = (
   appointments: Appointment[],
   settings: NotificationSettings
 ) => {
+  console.log('Iniciando scheduler de notificações');
+  
   // Verificar a cada hora
   const interval = setInterval(() => {
-    checkAndSendNotifications(appointments, settings);
+    try {
+      checkAndSendNotifications(appointments, settings);
+    } catch (error) {
+      console.error('Erro no scheduler de notificações:', error);
+    }
   }, 60 * 60 * 1000); // 1 hora
 
   // Verificação inicial
-  checkAndSendNotifications(appointments, settings);
+  try {
+    checkAndSendNotifications(appointments, settings);
+  } catch (error) {
+    console.error('Erro na verificação inicial de notificações:', error);
+  }
 
   return interval;
 };

@@ -10,7 +10,7 @@ import PatientForm from './components/Patients/PatientForm';
 import FinancialDashboard from './components/Financial/FinancialDashboard';
 import Settings from './components/Settings/Settings';
 import { Appointment, Patient } from './types';
-import { saveToStorage, loadFromStorage, STORAGE_KEYS } from './utils/storage';
+import { saveToStorage, loadFromStorage, removeFromStorage, STORAGE_KEYS } from './utils/storage';
 import { 
   notifyNewAppointment, 
   notifyCancelation, 
@@ -19,7 +19,12 @@ import {
 } from './utils/notifications';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    // Verificar se há autenticação salva no localStorage
+    const authState = loadFromStorage(STORAGE_KEYS.AUTH, false);
+    console.log('Estado de autenticação carregado:', authState);
+    return authState;
+  });
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const [showPatientForm, setShowPatientForm] = useState(false);
@@ -44,28 +49,38 @@ function App() {
     // Só inicializar se estiver autenticado
     if (!isAuthenticated) return;
     
-    const schedulerInterval = startNotificationScheduler(appointments, notificationSettings);
-    
-    return () => {
-      if (schedulerInterval) {
-        clearInterval(schedulerInterval);
-      }
-    };
-  }, [isAuthenticated, appointments.length, notificationSettings]);
+    try {
+      const schedulerInterval = startNotificationScheduler(appointments, notificationSettings);
+      
+      return () => {
+        if (schedulerInterval) {
+          clearInterval(schedulerInterval);
+        }
+      };
+    } catch (error) {
+      console.error('Erro ao inicializar sistema de notificações:', error);
+    }
+  }, [isAuthenticated]);
 
   const handleLogin = (success: boolean) => {
+    console.log('handleLogin chamado com success:', success);
     if (success) {
       setIsAuthenticated(true);
+      saveToStorage(STORAGE_KEYS.AUTH, true);
+      console.log('Login realizado com sucesso, autenticação salva');
     }
   };
 
   const handleLogout = () => {
+    console.log('handleLogout chamado');
     setIsAuthenticated(false);
+    removeFromStorage(STORAGE_KEYS.AUTH);
     setActiveTab('dashboard');
     setShowAppointmentForm(false);
     setShowPatientForm(false);
     setEditingAppointment(undefined);
     setEditingPatient(undefined);
+    console.log('Logout realizado');
   };
 
   const handleEditAppointment = (appointment: Appointment) => {

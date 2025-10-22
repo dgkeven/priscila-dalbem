@@ -27,6 +27,11 @@ const Settings: React.FC = () => {
     Notification.permission
   );
 
+  // Debug: Log quando o componente é renderizado
+  React.useEffect(() => {
+    console.log('Settings component rendered');
+  });
+
   const [profile, setProfile] = useState(() =>
     loadFromStorage(STORAGE_KEYS.PROFILE, {
       name: "Priscila Dalbem",
