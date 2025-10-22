@@ -157,7 +157,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6">
+    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6 mobile-safe">
       {showSaveMessage && (
         <div className="fixed top-3 right-3 sm:top-4 sm:right-4 bg-green-500 text-white px-3 sm:px-4 lg:px-6 py-2 sm:py-2 lg:py-3 rounded-lg shadow-lg flex items-center space-x-2 z-50 text-xs sm:text-sm lg:text-base">
           <Check className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -200,7 +200,7 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, name: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
               />
             </div>
 
@@ -214,7 +214,7 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, email: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
               />
             </div>
 
@@ -228,7 +228,7 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, phone: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
               />
             </div>
 
@@ -242,7 +242,7 @@ const Settings: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, crn: e.target.value })
                 }
-                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm lg:text-base"
+                className="w-full border border-gray-300 rounded-lg px-2.5 sm:px-3 py-2.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm sm:text-base mobile-touch"
               />
             </div>
           </div>
@@ -291,7 +291,7 @@ const Settings: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="w-full border border-gray-300 rounded px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 mobile-touch"
                     />
                   </div>
                 </div>
@@ -342,7 +342,7 @@ const Settings: React.FC = () => {
                         [day]: { ...hours, start: e.target.value },
                       })
                     }
-                    className="border border-gray-300 rounded px-1.5 sm:px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="border border-gray-300 rounded px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100 mobile-touch"
                   />
                   <span className="text-gray-500 text-xs sm:text-xs lg:text-sm">
                     às
@@ -357,7 +357,7 @@ const Settings: React.FC = () => {
                         [day]: { ...hours, end: e.target.value },
                       })
                     }
-                    className="border border-gray-300 rounded px-1.5 sm:px-2 py-1 text-xs sm:text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100"
+                    className="border border-gray-300 rounded px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-100 mobile-touch"
                   />
                 </div>
               </div>
@@ -553,7 +553,7 @@ const Settings: React.FC = () => {
       <div className="mt-6 flex justify-end">
         <button
           onClick={handleSaveSettings}
-          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-2 lg:py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base"
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-2 lg:py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 shadow-lg text-sm lg:text-base mobile-touch"
         >
           Salvar Configurações
         </button>
