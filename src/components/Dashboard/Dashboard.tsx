@@ -102,8 +102,8 @@ const Dashboard: React.FC = () => {
     };
   };
   return (
-    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6">
-      <div className="mb-8">
+    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6 mobile-safe">
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
         <p className="text-xs sm:text-sm lg:text-base text-gray-600">Bem-vinda, Priscila! Aqui está o resumo do seu consultório.</p>
       </div>

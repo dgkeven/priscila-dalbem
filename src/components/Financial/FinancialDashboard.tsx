@@ -128,7 +128,7 @@ const FinancialDashboard: React.FC = () => {
   const { totalIncome, totalExpenses, netProfit } = calculateTotals();
 
   return (
-    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6">
+    <div className="p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen pb-20 lg:pb-6 mobile-safe">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 space-y-4 lg:space-y-0">
         <div>
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">

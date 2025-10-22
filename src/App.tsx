@@ -156,7 +156,7 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 relative">
+    <div className="flex h-screen bg-gray-100 relative overflow-hidden">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar 
@@ -173,8 +173,10 @@ function App() {
         onLogout={handleLogout}
       />
       
-      <main className="flex-1 overflow-auto pt-0 lg:pt-0 pb-16 lg:pb-0">
-        {renderContent()}
+      <main className="flex-1 overflow-auto pt-0 lg:pt-0 pb-16 lg:pb-0 mobile-scroll">
+        <div className="min-h-full">
+          {renderContent()}
+        </div>
       </main>
 
       {showAppointmentForm && (
