@@ -41,9 +41,6 @@ function App() {
 
   // Inicializar sistema de notificações
   React.useEffect(() => {
-    // Só inicializar se estiver autenticado
-    if (!isAuthenticated) return;
-    
     const schedulerInterval = startNotificationScheduler(appointments, notificationSettings);
     
     return () => {
@@ -51,7 +48,7 @@ function App() {
         clearInterval(schedulerInterval);
       }
     };
-  }, [isAuthenticated, appointments.length, notificationSettings]);
+  }, [appointments, notificationSettings]);
 
   const handleLogin = (success: boolean) => {
     if (success) {
