@@ -22,20 +22,27 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
   const handleMenuClick = (tabId: string) => {
     setActiveTab(tabId);
     setIsOpen(false);
-  };
-
-  const handleMinimizeToggle = () => {
-    setIsMinimized(!isMinimized);
-    if (isOpen) {
-      setIsOpen(false);
-    }
+    // Opcional: minimizar após selecionar um item
+    // setIsMinimized(true);
   };
 
   const handleMenuToggle = () => {
-    setIsOpen(!isOpen);
     if (isMinimized) {
+      // Se estiver minimizado, expandir
       setIsMinimized(false);
+    } else if (isOpen) {
+      // Se o menu estiver aberto, fechar
+      setIsOpen(false);
+    } else {
+      // Se estiver normal, abrir menu
+      setIsOpen(true);
     }
+  };
+
+  const handleLongPress = () => {
+    // Toque longo para minimizar
+    setIsMinimized(true);
+    setIsOpen(false);
   };
 
   return (
@@ -52,19 +59,28 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
               <p className="text-emerald-100 text-xs">Nutricionista</p>
             </div>
           </div>
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={handleMinimizeToggle}
-              className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
-              title="Minimizar"
-            >
-              <ChevronDown className="w-5 h-5" />
-            </button>
+          <div className="flex items-center">
             <button
               onClick={handleMenuToggle}
+              onTouchStart={(e) => {
+                const startTime = Date.now();
+                const timer = setTimeout(() => {
+                  if (Date.now() - startTime >= 500) { // 500ms para toque longo
+                    handleLongPress();
+                  }
+                }, 500);
+                
+                const handleTouchEnd = () => {
+                  clearTimeout(timer);
+                  document.removeEventListener('touchend', handleTouchEnd);
+                };
+                
+                document.addEventListener('touchend', handleTouchEnd);
+              }}
               className="p-1.5 hover:bg-emerald-500 rounded-lg transition-colors"
+              title={isMinimized ? "Expandir" : isOpen ? "Fechar menu" : "Abrir menu (toque longo para minimizar)"}
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMinimized ? <ChevronUp className="w-5 h-5" /> : isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -74,7 +90,7 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ activeTab, setActiveTab, 
       {isMinimized && (
         <div className="lg:hidden fixed top-2 right-2 z-50">
           <button
-            onClick={handleMinimizeToggle}
+            onClick={handleMenuToggle}
             className="bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
             title="Expandir menu"
           >
